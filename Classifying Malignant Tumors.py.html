@@ -1,0 +1,133 @@
+
+# coding: utf-8
+
+# In[23]:
+
+
+import sklearn
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.svm import SVC
+
+# Load dataset
+data = load_breast_cancer()
+
+# Organize our data
+label_names = data['target_names']
+labels = data['target']
+feature_names = data['feature_names']
+features = data['data']
+
+
+# In[7]:
+
+
+# Look at our data
+print(label_names)
+print(labels[0])
+print(feature_names[0])
+print(features[0])
+
+
+# In[9]:
+
+
+# Split our data
+train, test, train_labels, test_labels = train_test_split(features, labels, test_size=0.33, random_state=42)
+
+
+# In[10]:
+
+
+# Initialize our classifier
+gnb = GaussianNB()
+
+# Train our classifier 
+model = gnb.fit(train, train_labels)
+
+
+# In[11]:
+
+
+# Make predictions
+preds = gnb.predict(test)
+print(preds)
+
+
+# In[13]:
+
+
+# Evaluate accuracy
+print(accuracy_score(test_labels, preds))
+
+
+# In[16]:
+
+
+# Initialize our LogisticRegression classifier
+
+logreg = LogisticRegression()
+logreg.fit(train, train_labels)
+
+print('Accuracy of Logistic regression classifier on training set: {:.2f}'
+     .format(logreg.score(train, train_labels)))
+print('Accuracy of Logistic regression classifier on test set: {:.2f}'
+     .format(logreg.score(test, test_labels)))
+
+
+# In[18]:
+
+
+# Initialize our decision tree
+clf = DecisionTreeClassifier().fit(train, train_labels)
+
+print('Accuracy of Decision Tree classifier on training set: {:.2f}'
+     .format(clf.score(train, train_labels)))
+print('Accuracy of Decision Tree classifier on test set: {:.2f}'
+     .format(clf.score(test, test_labels)))
+
+
+# In[20]:
+
+
+# K-nearest neighbors
+knn = KNeighborsClassifier()
+knn.fit(train, train_labels)
+
+print('Accuracy of K-NN classifier on training set: {:.2f}'
+     .format(knn.score(train, train_labels)))
+print('Accuracy of K-NN classifier on test set: {:.2f}'
+     .format(knn.score(test, test_labels)))
+
+
+# In[22]:
+
+
+# Linear discriminant Analysis
+lda = LinearDiscriminantAnalysis()
+lda.fit(train, train_labels)
+
+print('Accuracy of LDA classifier on training set: {:.2f}'
+     .format(lda.score(train, train_labels)))
+print('Accuracy of LDA classifier on test set: {:.2f}'
+     .format(lda.score(test, test_labels)))
+
+
+# In[24]:
+
+
+# SVM
+svm = SVC()
+svm.fit(train, train_labels)
+
+print('Accuracy of SVM classifier on training set: {:.2f}'
+     .format(svm.score(train, train_labels)))
+print('Accuracy of SVM classifier on test set: {:.2f}'
+     .format(svm.score(test, test_labels)))
+
